@@ -1,10 +1,10 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  token:  # id of input
+    description: 'Api token, get it from knowledgemarker.com'
     required: true
-    default: 'World'
+    default: 'notspecified'
 outputs:
   time: # id of output
     description: 'The time we greeted you'

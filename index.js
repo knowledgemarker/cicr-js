@@ -1,34 +1,27 @@
 const core = require("@actions/core");
-const github = require("@actions/github");
+// const github = require("@actions/github");
 
 try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput("who-to-greet");
-  console.log(`Hello ${nameToGreet}!`);
+  const token = core.getInput("token");
   const time = new Date().toTimeString();
   core.setOutput("time", time);
 
   const fs = require("fs");
   const path = require("path");
   const repoDirectory = process.env.GITHUB_WORKSPACE;
-  const filePath = path.join(repoDirectory, "requirements.txt");
+  const filePath1 = path.join(repoDirectory, "requirements.txt");
+  const filePath2 = path.join(repoDirectory, ".recruit.yml");
 
-  fs.readFile(filePath, "utf8", (err, data) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
+  const file1 = fs.readFileSync(filePath1, "utf8");
+  const file2 = fs.readFileSync(filePath2, "utf8");
 
-    console.log("Data:" + data);
-    const testData = { testData: data };
-
-    fetch("https://4771-45-86-178-159.ngrok-free.app/ciTest", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(testData),
-    });
+  fetch("https://4771-45-86-178-159.ngrok-free.app/ciTest", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      token: token,
+    },
+    body: JSON.stringify({ testData: file1, recruit: file2 }),
   });
 
   // Get the JSON webhook payload for the event that triggered the workflow

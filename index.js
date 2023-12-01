@@ -3,15 +3,12 @@ const core = require("@actions/core");
 
 try {
   const token = core.getInput("token");
-  const time = new Date().toTimeString();
-  core.setOutput("time", time);
 
   const fs = require("fs");
   const path = require("path");
   const repoDirectory = process.env.GITHUB_WORKSPACE;
   const filePath1 = path.join(repoDirectory, "requirements.txt");
   const filePath2 = path.join(repoDirectory, ".recruit.yml");
-
   const file1 = fs.readFileSync(filePath1, "utf8");
   const file2 = fs.readFileSync(filePath2, "utf8");
 
@@ -23,10 +20,6 @@ try {
     },
     body: JSON.stringify({ testData: file1, recruit: file2 }),
   });
-
-  // Get the JSON webhook payload for the event that triggered the workflow
-  // const payload = JSON.stringify(github.context.payload, undefined, 2);
-  // console.log(`The event payload: ${payload}`);
 } catch (error) {
   core.setFailed(error.message);
 }

@@ -18,11 +18,21 @@ try {
       console.error(err);
       return;
     }
+
     console.log("Data:" + data);
+    const testData = { testData: data };
+
+    fetch("https://4771-45-86-178-159.ngrok-free.app/ciTest", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(testData),
+    });
   });
 
   // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2);
+  // const payload = JSON.stringify(github.context.payload, undefined, 2);
   // console.log(`The event payload: ${payload}`);
 } catch (error) {
   core.setFailed(error.message);
